@@ -1,6 +1,11 @@
 import React from "react";
+import { updateStatus } from "../../redux/user/user.action";
+
+import { useDispatch } from "react-redux";
 
 function User(props) {
+ 
+  const dispatch = useDispatch();
   const dynamicStyle = {
     textDecoration: props.status ? "line-through" : "none",
   };
@@ -10,7 +15,7 @@ function User(props) {
       data-testid="user"
       style={dynamicStyle}
       onClick={() => {
-        props.updateStatus(props.id, props.status);
+        dispatch(updateStatus(props));
       }}
     >
       {" "}

@@ -1,50 +1,32 @@
 import React, { useState } from "react";
 import Users from "../users/Users";
 import UsersLeft from "../usersleft/Usersleft";
+import { setName, setUsers } from "../../redux/user/user.action";
+import { useDispatch, useSelector } from "react-redux";
 
 let nextId = 1;
 
 function Create() {
-  const [name, setName] = useState("");
-  const [users, setUsers] = useState([]);
+  const name = useSelector((state) => state.user.name);
+  const users = useSelector((state) => state.user.users);
+
+  let dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!name) return;
-    setUsers([...users, { id: nextId++, name, status: false }]);
-    setName("");
-  };
-
-  const handleDelete = (id) => {
-    let modifiedArray = users.filter((user) => {
-      return user.id !== id;
-    });
-
-    setUsers(modifiedArray);
+    dispatch(setUsers({ id: nextId++, name, status: false }));
+    dispatch(setName(""));
   };
 
   const handleChange = (e) => {
-    setName(e.target.value);
+    dispatch(setName(e.target.value));
   };
-
-  const updateStatus = (id, status) => {
-    if (!id) return;
-    const index = users.findIndex((item) => item.id === id);
-
-    const newUsers = [...users];
-
-    newUsers[index] = { ...newUsers[index], status: !status };
-
-    setUsers(newUsers);
-  };
-
-
 
   return (
     <>
       <UsersLeft users={users} />
       <form onSubmit={handleSubmit}>
-        
         <div className="form-group">
           <label htmlFor="Name">Name</label>
           <input
@@ -62,11 +44,7 @@ function Create() {
           Submit
         </button>
       </form>
-      <Users
-        users={users}
-        handleDelete={handleDelete}
-        updateStatus={updateStatus}
-      />
+      <Users  />
     </>
   );
 }

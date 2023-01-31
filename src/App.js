@@ -1,18 +1,30 @@
-import React, { useState } from "react";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Create from "./components/create/Create";
-import logo from "./logo.svg";
+import People from "./routes/people/People";
+import PeopleProfile from "./components/peopleApi/PeopleProfile";
+
 import "./App.css";
+import Navbar from "./components/navbar/Navbar";
 
 function App() {
   return (
-    <div className="container">
-      <div className="row">
-        <p>Messi</p>
-        <div className="col-md-6">
-          <Create />
+    <>
+      <Navbar />
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <p>Messi</p>
+            <Routes>
+              <Route index element={<Create />} />
+              <Route path="/people" element={<People />} />
+
+              <Route path="/people/:id" element={<PeopleProfile />} />
+            </Routes>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

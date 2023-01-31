@@ -1,6 +1,11 @@
 import React from "react";
 
-function Delete({ id, handleDelete }) {
+import { useDispatch } from "react-redux";
+import {  deleteUser } from "../../redux/user/user.action";
+
+function Delete({ id }) {
+ let dispatch = useDispatch()
+
   return (
     <div key={id} data-testid="delete-button">
       <button
@@ -8,7 +13,7 @@ function Delete({ id, handleDelete }) {
         key={id}
         type="submit"
         onClick={() => {
-          handleDelete(id);
+          dispatch(deleteUser(id));
         }}
       >
         Delete
