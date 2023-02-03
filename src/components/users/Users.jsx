@@ -10,7 +10,7 @@ function Users() {
       {" "}
       {users.map((user) => {
         return (
-          <div key={user.id}>
+          <div key={user.id} data-testid="users">
             <User status={user.status} name={user.name} id={user.id} />
             <Delete id={user.id} />
           </div>

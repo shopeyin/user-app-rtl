@@ -14,7 +14,7 @@ function App() {
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <p>Messi</p>
+          
             <Routes>
               <Route index element={<Create />} />
               <Route path="/people" element={<People />} />

@@ -1,24 +1,34 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { Provider } from "react-redux";
+import configureMockStore from "redux-mock-store";
+
 import Delete from "./Delete";
+
+const mockStore = configureMockStore();
 
 describe("Delete component", () => {
   let id;
-  let handleDelete;
 
-  beforeEach(() => {
-    id = 1;
-    handleDelete = jest.fn();
-  });
-  it("should have delete text", () => {
-    render(<Delete id={id} handleDelete={handleDelete} />);
-    let text = screen.getByText("Delete");
-    expect(text).toBeInTheDocument();
-  });
+  let store = mockStore({});
 
-  it("should call delete function", () => {
-    render(<Delete id={id} handleDelete={handleDelete} />);
+  it("should dispatch delete action", () => {
+    render(
+      <Provider store={store}>
+        <Delete id={id} />
+      </Provider>
+    );
     let button = screen.getByRole("button");
     fireEvent.click(button);
-    expect(handleDelete).toHaveBeenCalledTimes(1);
+    const action = store.getActions();
+    expect(action[0].type).toBe("DELETE_USER");
+  });
+  it("should have delete Text", () => {
+    render(
+      <Provider store={store}>
+        <Delete id={id} />
+      </Provider>
+    );
+    let text = screen.getByText("Delete");
+    expect(text.innerHTML).toBe("Delete");
   });
 });
